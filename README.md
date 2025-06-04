@@ -290,28 +290,37 @@ ________________________________________________________________________________
 
 nano ~/backup_wordpress.sh
 
-(Bash Configurations)
+(Bash Configurations) 
+
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
 BACKUP_DIR="/home/ubuntu/backups"
 mkdir -p "$BACKUP_DIR"
 
 (Backup WordPress files)
+
 tar -czf "$BACKUP_DIR/wp-files-$TIMESTAMP.tar.gz" /var/www/html
 
 (Backup WordPress database)
+
 sudo mysqldump -u root wordpress > "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
 tar -czf "$BACKUP_DIR/wp-db-$TIMESTAMP.tar.gz" "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
 rm "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
 
+echo "Backup completed successfully at $TIMESTAMP"
+
 (change permissions for script and making it executable)
+
 chmod +x ~/backup_wordpress.sh
 
 (you can test the script)
+
 ./backup_wordpress.sh
+
 
 14. Open the notepad and use this code to create a powershell script to your virtual machine:
 
 (You need to replace file path and IP for you values)
+
 
 $KeyPath = "C:\Users\YourName\path\to\NewmachineKey.pem"
 $RemoteUser = "ubuntu"
@@ -322,6 +331,7 @@ $LocalSavePath = "C:\Backups"
 ssh -i $KeyPath "$RemoteUser@$RemoteHost" "bash ~/backup_wordpress.sh"
 
 (Step 2: Download latest backup)
+
 scp -i $KeyPath "$RemoteUser@$RemoteHost:~/backups/*.tar.gz" $LocalSavePath
 
 (Save it as All files type and the file name ending with  ".ps1" to this location: C:\Backups)
