@@ -6,13 +6,150 @@ Student Name : Almir Cavalcante Filho
 
 ICT171 - Project Timeline - How to develop a cloud based Blog using EC2 Amazon machine, Route53 domain, Wordpress and Apache.
 
-1) Connecting to my instance to start developing my cloud based server:
+Step by step of how to set up a complete Virtual Machine with Amazon AWS EC2 (Elastic IP, Domain via Route53 and SSL Certificate with Let’s Encrypt - HTTPS).
+
+
+1. starting creating an account in AMAZON AWS with credit card linked to it:
+
+   link:  http://aws.amazon.com/ec2/
+
+   login in -> go to EC2 page -> Launch Instance
+ 
+   Choose a name for your Virtual Machine -> select Ubuntu -> and you can use the free tier machine for studying purposes (750hr / month free for 1 year)
+
+   Configure the instance details - You can leave everything as the default -> he default is to create a virtual machine with an 8GB hard drive. That's fine, leave it at the default.
+
+   There is already SSH rule added to access the machine -> click on add rule and select HTTP (Web) as type (This allows web requests to be received by our server).
+
+   Now click on create a new key pair, choose a meaninful name to identify your machine and save it safely (you need the key everytime you want to log in to your machine).
+
+
+2. Log in to your machine using the command line:
+
+   Now that your server is running in the cloud you need to login to the command line of your virtual machine.
+
+   Select your machine and click Connect, one similar code like this will be provided to you: 
+
+     code example: ssh -i "yourkeyname.pem" ubuntu@ec2-12-123-1-35.ap-southwest-5.compute.amazonaws.com
+
+   Now open your command line and use the cd (Change Directory) to move to where your machine key was saved on your computer
+
+   Inside the page you can confirm using ls to check all the files on that directory and then copy and paste the connect code to access your machine
+
+   You're in! Once you have command-line access to your virtual machine, the apt repositories may be out of date. Before you install anything, it is often a good idea to update them with :
+
+     code: sudo apt update 
+
+     code: sudo apt install apache2
+
+
+
+3. How to create an elastic IP and link it to your existing machine:
+
+
+An Elastic IP is a static public IP address that you can associate with your EC2 instance. This prevents the IP from changing when you stop and start the instance.
+
+Steps:
+
+Go to the AWS Console → EC2
+
+In the sidebar, click "Elastic IPs"
+
+Click “Allocate Elastic IP address”
+
+Leave the default option ("Amazon pool of IPs")
+
+Click "Allocate"
+
+You’ll see the IP created. Now click “Actions → Associate Elastic IP address”
+
+Under "Resource type", select "Instance"
+
+Choose your EC2 instance
+
+Click "Associate"
+
+DONE! Now your instance has a permanent public IP address.
+
+
+
+
+
+4. How to buy a domain name with Route 53 and link to your existing machine:
+
+
+Go to the AWS Console → Route 53
+
+Click “Domain Registration → Register Domain”
+
+Choose and purchase a domain (e.g., my domain costs USD 3 / year  - aussietech.click)
+
+After the domain is registered, go to “Hosted Zones” and click your domain
+
+Click "Create Record":
+
+Record name: leave blank (for root domain)
+
+Record type: A – IPv4 address
+
+Value: enter your Elastic IP
+
+TTL: 300 (or leave default)
+
+Click "Create records"
+
+Your domain now points to your EC2 instance.
+
+
+
+5.How to Install an SSL Certificate with Let’s Encrypt (HTTPS):
+
+SSL is essential for security and removes the “Not Secure” warning in browsers. We'll use Certbot with Apache.
+
+Steps:
+On your EC2 instance terminal:
+
+
+sudo apt update
+sudo apt install certbot python3-certbot-apache -y
+
+
+Run Certbot:
+sudo certbot --apache
+
+Follow the prompts:
+
+Enter your email
+
+Accept the terms
+
+Certbot will detect your domain (make sure it's already pointing to your IP)
+
+Choose the option to redirect all HTTP traffic to HTTPS
+
+
+
+(Optional) Test auto-renewal:
+
+sudo certbot renew --dry-run
+
+Done! Your website is now secured with a valid SSL certificate from Let’s Encrypt.
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------- PART 2 -> Connecting to your Instance and installing WordPress + permissions , MySQL and check if your blog is ready!------------------------------------------
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+
+6) Connecting to my instance to start developing my cloud based server:
 
 You need to open your terminal and find your PEM key file and change directory to that folder and them you connect to your machine using a code like this:
 
 ssh -i "NewmachineKey.pem" ubuntu@ec2-34-201-206-26.compute-1.amazonaws.com
 
-2) To update your Ubuntu system and install Apache:
+7) To update your Ubuntu system and install Apache:
 
 Update System:
 
@@ -24,7 +161,7 @@ sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-cli p
 sudo systemctl enable apache2
 sudo systemctl start apache2
 
-3) Starting MySQL (software that stores and manages structured data in tables using SQL).
+8) Starting MySQL (software that stores and manages structured data in tables using SQL).
 
 sudo systemctl start mysql
 sudo systemctl enable MySQL
@@ -40,7 +177,7 @@ Apache or Nginx = voice 📣 (delivers the website to users)
 
 ***************************************************************
 
-4) Creating a Wordpress Database:
+9) Creating a Wordpress Database:
 
 Run this code to open MySQL Shell and enter password
 
@@ -57,7 +194,7 @@ EXIT;
 
 and now i have created successfully the Wordpress database user and having full access to its database.
 
-5) Download and extracting Wordpress
+10) Download and extracting Wordpress
 
 cd /tmp
 wget https://wordpress.org/latest.tar.gz
@@ -70,13 +207,13 @@ tar - the command too work with .tar archives
 -xzf ( x = extract content / z = uncompress / f specify the file to extract)
 
 
-6) Moving Wordpress to the web directory
+11) Moving Wordpress to the web directory
 
 sudo rsync -av wordpress/ /var/www/html/
 
 sudo rm /var/www/html/index.html
 
-7) Configuring permissions
+12) Configuring permissions
 
 first connect to your database editing your configuration file :
 
@@ -122,4 +259,82 @@ Domain Name (Route53) : aussietech.click
 if SSL encryption is activated : Certified
 
 Wordpress Installed
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+----------------------------- PART 3 -> Backup!------------------------------------------
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+13) SSH into your EC2 instance and create a backup bash script using this code below:
+
+nano ~/backup_wordpress.sh
+
+(Bash Configurations)
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
+BACKUP_DIR="/home/ubuntu/backups"
+mkdir -p "$BACKUP_DIR"
+
+(Backup WordPress files)
+tar -czf "$BACKUP_DIR/wp-files-$TIMESTAMP.tar.gz" /var/www/html
+
+(Backup WordPress database)
+sudo mysqldump -u root wordpress > "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
+tar -czf "$BACKUP_DIR/wp-db-$TIMESTAMP.tar.gz" "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
+rm "$BACKUP_DIR/wp-db-$TIMESTAMP.sql"
+
+(change permissions for script and making it executable)
+chmod +x ~/backup_wordpress.sh
+
+(you can test the script)
+./backup_wordpress.sh
+
+14. Open the notepad and use this code to create a powershell script to your virtual machine:
+
+(You need to replace file path and IP for you values)
+
+$KeyPath = "C:\Users\YourName\path\to\NewmachineKey.pem"
+$RemoteUser = "ubuntu"
+$RemoteHost = "34.201.206.26"
+$LocalSavePath = "C:\Backups"
+
+(Step 1: Trigger backup script on EC2)
+ssh -i $KeyPath "$RemoteUser@$RemoteHost" "bash ~/backup_wordpress.sh"
+
+(Step 2: Download latest backup)
+scp -i $KeyPath "$RemoteUser@$RemoteHost:~/backups/*.tar.gz" $LocalSavePath
+
+(Save it as All files type and the file name ending with  ".ps1" to this location: C:\Backups)
+C:\Backups\ec2-backup.ps1
+
+15) Now we can manage the script to do the backup, desactivate it or schedule a backup period:
+
+(Schedule to every 15 days)
+
+schtasks /create /sc daily /mo 15 /tn "CloudBackup" /tr "powershell.exe -ExecutionPolicy Bypass -File C:\Backups\ec2-backup.ps1" /st 15:00
+
+/sc daily /mo 15                     -> every 15 days -> you can modify if you want
+
+/tn "CloudBackup"                    -> name of the task
+
+/tr ...                              -> runs the PowerShell script
+
+/st 15:00                            -> runs at 3:00 PM you can modify if you want
+
+(Running the backup manually)
+
+powershell -ExecutionPolicy Bypass -File "C:\Backups\ec2-backup.ps1"
+
+(Disable task)
+
+Disable-ScheduledTask -TaskName "CloudBackup"
+
+(Check Task)
+
+schtasks | findstr CloudBackup
+
+
 
