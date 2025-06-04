@@ -166,12 +166,15 @@ sudo apt update && sudo apt upgrade -y
 Installing Apache2:
 
 sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-cli php-cgi php-gd -y
+
 sudo systemctl enable apache2
+
 sudo systemctl start apache2
 
 8) Starting MySQL (software that stores and manages structured data in tables using SQL).
 
 sudo systemctl start mysql
+
 sudo systemctl enable MySQL
 
 
