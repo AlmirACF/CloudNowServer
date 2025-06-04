@@ -175,7 +175,7 @@ sudo systemctl start apache2
 
 sudo systemctl start mysql
 
-sudo systemctl enable MySQL
+sudo systemctl enable mySQL
 
 
 ************* Summarising to good understanding **************
