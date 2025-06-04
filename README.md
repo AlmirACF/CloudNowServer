@@ -208,13 +208,19 @@ and now i have created successfully the Wordpress database user and having full 
 10) Download and extracting Wordpress
 
 cd /tmp
+
 wget https://wordpress.org/latest.tar.gz
+
 tar -xzf latest.tar.gz
 
 You use tmp to create a temporary folder as a short term storage.
+
 Wget - Download the file from its website.
+
 .tar.gz - the file is a compressed archive (e.g zip file).
+
 tar - the command too work with .tar archives
+
 -xzf ( x = extract content / z = uncompress / f specify the file to extract)
 
 
