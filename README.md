@@ -17,7 +17,7 @@ ________________________________________________________________________________
 
 
 
-1. starting creating an account in AMAZON AWS with credit card linked to it:
+## 1. starting creating an account in AMAZON AWS with credit card linked to it:
 
    link:  http://aws.amazon.com/ec2/
 
@@ -32,7 +32,7 @@ ________________________________________________________________________________
    Now click on create a new key pair, choose a meaninful name to identify your machine and save it safely (you need the key everytime you want to log in to your machine).
 
 
-2. Log in to your machine using the command line:
+## 2. Log in to your machine using the command line:
 
    Now that your server is running in the cloud you need to login to the command line of your virtual machine.
 
@@ -52,7 +52,7 @@ ________________________________________________________________________________
 
 
 
-3. How to create an elastic IP and link it to your existing machine:
+## 3. How to create an elastic IP and link it to your existing machine:
 
 
 An Elastic IP is a static public IP address that you can associate with your EC2 instance. This prevents the IP from changing when you stop and start the instance.
@@ -83,7 +83,7 @@ DONE! Now your instance has a permanent public IP address.
 
 
 
-4. How to buy a domain name with Route 53 and link to your existing machine:
+## 4. How to buy a domain name with Route 53 and link to your existing machine:
 
 
 Go to the AWS Console → Route 53
@@ -110,7 +110,7 @@ Your domain now points to your EC2 instance.
 
 
 
-5.How to Install an SSL Certificate with Let’s Encrypt (HTTPS):
+## 5.How to Install an SSL Certificate with Let’s Encrypt (HTTPS):
 
 SSL is essential for security and removes the “Not Secure” warning in browsers. We'll use Certbot with Apache.
 
@@ -151,13 +151,13 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________________________________________________________________________________________
 
 
-6) Connecting to my instance to start developing my cloud based server:
+## 6. Connecting to my instance to start developing my cloud based server:
 
 You need to open your terminal and find your PEM key file and change directory to that folder and them you connect to your machine using a code like this:
 
 ssh -i "NewmachineKey.pem" ubuntu@ec2-34-201-206-26.compute-1.amazonaws.com
 
-7) To update your Ubuntu system and install Apache:
+## 7. To update your Ubuntu system and install Apache:
 
 Update System:
 
@@ -171,7 +171,7 @@ sudo systemctl enable apache2
 
 sudo systemctl start apache2
 
-8) Starting MySQL (software that stores and manages structured data in tables using SQL).
+## 8 Starting MySQL (software that stores and manages structured data in tables using SQL).
 
 sudo systemctl start mysql
 
@@ -188,7 +188,7 @@ Apache or Nginx = voice 📣 (delivers the website to users)
 
 ***************************************************************
 
-9) Creating a Wordpress Database:
+## 9. Creating a Wordpress Database:
 
 Run this code to open MySQL Shell and enter password
 
@@ -205,7 +205,7 @@ EXIT;
 
 and now i have created successfully the Wordpress database user and having full access to its database.
 
-10) Download and extracting Wordpress
+## 10. Download and extracting Wordpress
 
 cd /tmp
 
@@ -224,13 +224,13 @@ tar - the command too work with .tar archives
 -xzf ( x = extract content / z = uncompress / f specify the file to extract)
 
 
-11) Moving Wordpress to the web directory
+## 11. Moving Wordpress to the web directory
 
 sudo rsync -av wordpress/ /var/www/html/
 
 sudo rm /var/www/html/index.html
 
-12) Configuring permissions
+## 12. Configuring permissions
 
 first connect to your database editing your configuration file :
 
@@ -286,7 +286,7 @@ ________________________________________________________________________________
 
 
 
-13) SSH into your EC2 instance and create a backup bash script using this code below:
+## 13. SSH into your EC2 instance and create a backup bash script using this code below:
 
 nano ~/backup_wordpress.sh
 
@@ -317,7 +317,7 @@ chmod +x ~/backup_wordpress.sh
 ./backup_wordpress.sh
 
 
-14. Open the notepad and use this code to create a powershell script to your virtual machine:
+## 14. Open the notepad and use this code to create a powershell script to your virtual machine:
 
 (You need to replace file path and IP for you values)
 
@@ -337,7 +337,7 @@ scp -i $KeyPath "$RemoteUser@$RemoteHost:~/backups/*.tar.gz" $LocalSavePath
 (Save it as All files type and the file name ending with  ".ps1" to this location: C:\Backups)
 C:\Backups\ec2-backup.ps1
 
-15) Now we can manage the script to do the backup, desactivate it or schedule a backup period:
+## 15. Now we can manage the script to do the backup, desactivate it or schedule a backup period:
 
 (Schedule to every 15 days)
 
