@@ -1,12 +1,14 @@
 # CloudNowServer
 
 Cloud based Project for Murdoch University
+
 Student ID: 355228443
+
 Student Name : Almir Cavalcante Filho
 
 ICT171 - Project Timeline - How to develop a cloud based Blog using EC2 Amazon machine, Route53 domain, Wordpress and Apache.
 
-Step by step of how to set up a complete Virtual Machine with Amazon AWS EC2 (Elastic IP, Domain via Route53 and SSL Certificate with Let’s Encrypt - HTTPS).
+Step by step of how to set up a complete Virtual Machine with Amazon AWS EC2 (Elastic IP, Domain via Route53, WordPress and SSL Certificate with Let’s Encrypt).
 
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
@@ -38,7 +40,7 @@ ________________________________________________________________________________
 
    Select your machine and click Connect, one similar code like this will be provided to you: 
 
-     code example: ssh -i "yourkeyname.pem" ubuntu@ec2-12-123-1-35.ap-southwest-5.compute.amazonaws.com
+     code: ssh -i "yourkeyname.pem" ubuntu@ec2-12-123-1-35.ap-southwest-5.compute.amazonaws.com
 
    Now open your command line and use the cd (Change Directory) to move to where your machine key was saved on your computer
 
@@ -118,12 +120,14 @@ Steps:
 On your EC2 instance terminal:
 
 
-sudo apt update
-sudo apt install certbot python3-certbot-apache -y
+code: sudo apt update
+
+code: sudo apt install certbot python3-certbot-apache -y
 
 
 Run Certbot:
-sudo certbot --apache
+
+code: sudo certbot --apache
 
 Follow the prompts:
 
@@ -139,7 +143,7 @@ Choose the option to redirect all HTTP traffic to HTTPS
 
 (Optional) Test auto-renewal:
 
-sudo certbot renew --dry-run
+code: sudo certbot renew --dry-run
 
 Done! Your website is now secured with a valid SSL certificate from Let’s Encrypt.
 
@@ -155,30 +159,31 @@ ________________________________________________________________________________
 
 You need to open your terminal and find your PEM key file and change directory to that folder and them you connect to your machine using a code like this:
 
-ssh -i "NewmachineKey.pem" ubuntu@ec2-34-201-206-26.compute-1.amazonaws.com
+
+code: ssh -i "NewmachineKey.pem" ubuntu@ec2-34-201-206-26.compute-1.amazonaws.com
 
 ## 7. To update your Ubuntu system and install Apache:
 
 Update System:
 
-sudo apt update && sudo apt upgrade -y
+code: sudo apt update && sudo apt upgrade -y
 
 Installing Apache2:
 
-sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-cli php-cgi php-gd -y
+code: sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-cli php-cgi php-gd -y
 
-sudo systemctl enable apache2
+code: sudo systemctl enable apache2
 
-sudo systemctl start apache2
+code: sudo systemctl start apache2
 
 ## 8 Starting MySQL (software that stores and manages structured data in tables using SQL).
 
-sudo systemctl start mysql
+code: sudo systemctl start mysql
 
-sudo systemctl enable mysql
+code: sudo systemctl enable mysql
 
 
-************* Summarising to good understanding **************
+## ***** Summarising to good understanding *****
 
 MySQL = brain 🧠 (stores memory and data)
 
@@ -186,13 +191,14 @@ PHP = body 🧍‍♂️ (moves, talks, shows info)
 
 Apache or Nginx = voice 📣 (delivers the website to users)
 
-***************************************************************
+## *********************************************
+
 
 ## 9. Creating a Wordpress Database:
 
 Run this code to open MySQL Shell and enter password
 
-sudo mysql -u root -p
+code: sudo mysql -u root -p
 
 
 The create Wordpress Database using
@@ -207,13 +213,15 @@ and now i have created successfully the Wordpress database user and having full 
 
 ## 10. Download and extracting Wordpress
 
-cd /tmp
+code: 
 
-wget https://wordpress.org/latest.tar.gz
+   cd /tmp
 
-tar -xzf latest.tar.gz
+   wget https://wordpress.org/latest.tar.gz
 
-You use tmp to create a temporary folder as a short term storage.
+   tar -xzf latest.tar.gz
+
+Explaining the code: You use tmp to create a temporary folder as a short term storage.
 
 Wget - Download the file from its website.
 
@@ -226,17 +234,17 @@ tar - the command too work with .tar archives
 
 ## 11. Moving Wordpress to the web directory
 
-sudo rsync -av wordpress/ /var/www/html/
+code: sudo rsync -av wordpress/ /var/www/html/
 
-sudo rm /var/www/html/index.html
+code: sudo rm /var/www/html/index.html
 
 ## 12. Configuring permissions
 
 first connect to your database editing your configuration file :
 
-cd /var/www/html
-sudo cp wp-config-sample.php wp-config.php
-sudo nano wp-config.php
+code: cd /var/www/html
+code: sudo cp wp-config-sample.php wp-config.php
+code: sudo nano wp-config.php
 
 then edit these lines to match what you created for wordpress user / database name / password : 
 
