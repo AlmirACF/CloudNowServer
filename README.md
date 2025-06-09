@@ -457,7 +457,50 @@ Disable-ScheduledTask -TaskName "CloudBackup"
 schtasks | findstr CloudBackup
 ```
 
+_____________________________________________________________________________________________________________________________________________________________________________________________
 
-License
+
+### License : This project, CloudNow, is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+
+_____________________________________________________________________________________________________________________________________________________________________________________________
+
+
+The primary purpose of this project is educational. It was developed as part of a university assignment in cloud computing, hosted on an Amazon EC2 instance with a custom domain and WordPress setup. As such, the license was selected to ensure the work remains available for learning, inspiration, and academic sharing-while protecting it from unauthorized commercial exploitation.
+
+**Key Benefits:**
+
+   - Attribution Encouraged
+This license allows others to share, adapt, and build upon the work only if they provide appropriate credit. This supports academic integrity and highlights the original author (Almir Cavalcante Filho) as the creator, building a professional presence.
+
+   - Non-Commercial Use Only
+The license restricts usage to non-commercial contexts. This means educators, students, and developers may learn from or replicate the work for personal, academic, or portfolio purposes—but may not sell, redistribute commercially, or integrate it into paid services without explicit permission.
+
+   - Open Educational Resource (OER) Friendly
+By choosing this license, the project aligns with the principles of open educational resources (OER), supporting open access to knowledge in cloud computing technologies like EC2, Route 53, Apache, and WordPress.
+
+
+### Bonus Step : Adding License to your WordPress Blog Page:
+
+   - Choose a good license for your page goals
+
+   - You can log in to your wordpress administrator page and go to -> Appearance -> Header -> Footer -> Copyright Footer (To add at the bottom of your page)
+
+     similar to this code: 
+
+    html <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"> <img alt="Creative Commons License" style="border-width:0; margin-right:8px;" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /> </a> <p> © 2025 Almir Cavalcante Filho – This site and its content are licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank"> Creative Commons Attribution-NonCommercial 4.0 International License </a>. Original work created for educational and portfolio purposes. </p>
+
+
+   - Will look like this when published:
+     
+<a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">
+  <img alt="Creative Commons License" style="border-width:0; margin-right:8px;" 
+       src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+</a>
+<p>
+  © 2025 Almir Cavalcante Filho – This site and its content are licensed under a 
+  <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">
+    Creative Commons Attribution-NonCommercial 4.0 International License
+  </a>. Original work created for educational and portfolio purposes.
+</p>
 
 
