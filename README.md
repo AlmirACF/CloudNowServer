@@ -22,6 +22,10 @@ Watch the full video walkthrough of the CloudNow deployment and configuration st
 
 [![CloudNow Deployment on YouTube](https://img.youtube.com/vi/SBzm4MnECxw/hqdefault.jpg)](https://youtu.be/SBzm4MnECxw)
 
+Also available in my GoogleDrive Link below (I really learned about backups and safety 😁).
+
+#### 📽️ [Click here to watch the full deployment tutorial video (Google Drive)](https://drive.google.com/file/d/1FCOI5P5_PZ_iUEjvz77obcParI-1F7yP/view?usp=drivesdk)
+
 
 
 _____________________________________________________________________________________________________________________________________________________________________________________________
